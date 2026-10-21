@@ -33,20 +33,20 @@ helm install webapp ./charts/webapp -n demo --create-namespace
 
 or use the script:
 
-bash
 ./scripts/install.sh
 
 Verify
-bash
+
 kubectl get pods -n demo
 kubectl get svc -n demo
 kubectl get configmap -n demo
 
 Test the app
-bash
+
+
 kubectl port-forward -n demo svc/webapp 8080:80
 curl http://localhost:8080
 
 Uninstall
-bash
+
 ./scripts/uninstall.sh
