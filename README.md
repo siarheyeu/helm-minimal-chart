@@ -50,3 +50,31 @@ curl http://localhost:8080
 Uninstall
 
 ./scripts/uninstall.sh
+
+📁 Project Structure
+.
+├── charts/webapp/        # Helm chart
+│   ├── Chart.yaml
+│   ├── values.yaml
+│   ├── templates/
+│   └── .helmignore
+├── scripts/              # Install/uninstall helpers
+└── .github/workflows/    # CI
+
+🧪 CI
+On every push, GitHub Actions runs:
+
+helm lint charts/webapp
+helm template webapp charts/webapp
+
+This catches:
+
+YAML syntax errors
+
+Missing required values
+
+Invalid template functions
+
+Rendering issues
+
+
