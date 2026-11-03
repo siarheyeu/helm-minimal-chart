@@ -1,0 +1,13 @@
+apiVersion: v2
+name: webapp
+description: A minimal Helm chart for a web application
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+maintainers:
+  - name: Uladzimir Siarheyeu
+    email: siarheyeu.uladzimir@outlook.com
+keywords:
+  - web
+  - nginx
+  - demo
