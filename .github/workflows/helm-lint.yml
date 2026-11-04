@@ -1,0 +1,38 @@
+name: Helm Chart CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  lint-and-template:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: 'v3.15.0'
+
+      - name: Helm version
+        run: helm version
+
+      - name: Lint chart
+        run: helm lint charts/webapp --strict
+
+      - name: Template chart
+        run: |
+          helm template webapp charts/webapp > rendered.yaml
+          echo "=== Rendered manifests ==="
+          cat rendered.yaml
+
+      - name: Validate rendered YAML (kubeconform)
+        run: |
+          curl -sL https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz | tar xz
+          sudo mv kubeconform /usr/local/bin/
+          kubeconform -strict -summary rendered.yaml
